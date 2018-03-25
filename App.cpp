@@ -1,6 +1,6 @@
 /*
 	This file is a part of "Chat Logger++"
-	©2k12, Didrole
+	Â©2k12, Didrole
 	
 	License : Public domain
 */
@@ -17,6 +17,7 @@
 enum
 {
 	wxID_AUTOSTART = 1,
+	wxID_HIDE = 2,
 };
 
 BEGIN_EVENT_TABLE(CApp, wxApp)
@@ -24,6 +25,7 @@ BEGIN_EVENT_TABLE(CApp, wxApp)
 	EVT_TASKBAR_RIGHT_DOWN(OnTaskBarIconClick)
 	EVT_MENU(wxID_AUTOSTART, OnAutoStartButtonClick)
 	EVT_MENU(wxID_OPEN, OnConfigurationButtonClick)
+	EVT_MENU(wxID_HIDE, OnHideButtonClick)
 	EVT_MENU(wxID_EXIT, OnExitButtonClick)
 END_EVENT_TABLE()
 
@@ -102,6 +104,8 @@ void CApp::OnTaskBarIconClick(wxTaskBarIconEvent& event)
 	menu.AppendSeparator();
 	menu.Append(wxID_AUTOSTART, _("Start with Windows"), wxEmptyString, wxITEM_CHECK)->Check(bAutoRun);
 	menu.AppendSeparator();
+	menu.Append(wxID_HIDE, _("Hide Tray Icon"));
+	menu.AppendSeparator();
 	menu.Append(wxID_EXIT);
 
 	m_pTaskBarIcon->PopupMenu(&menu);
@@ -150,6 +154,12 @@ void CApp::OnConfigurationButtonClick(wxCommandEvent& event)
 
 	if(m_pConfigurationDialog)
 		m_pConfigurationDialog->Raise();
+}
+
+void CApp::OnExitButtonClick(wxCommandEvent& event)
+{
+	m_pTaskBarIcon->RemoveIcon();
+	delete m_pTaskBarIcon;
 }
 
 void CApp::Message(const wxString& message)
