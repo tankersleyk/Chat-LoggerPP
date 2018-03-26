@@ -158,6 +158,11 @@ void CApp::OnConfigurationButtonClick(wxCommandEvent& event)
 
 void CApp::OnExitButtonClick(wxCommandEvent& event)
 {
+	this->ExitMainLoop();
+}
+
+void CApp::OnHideButtonClick(wxCommandEvent% event)
+{
 	m_pTaskBarIcon->RemoveIcon();
 	delete m_pTaskBarIcon;
 }
